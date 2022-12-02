@@ -43,7 +43,7 @@ function parse_into_arr(string $input_name, ?callable $converter, bool $filter_e
  *          [1] => [2000, 6000]
  *          
  */
-function parse_into_chunks_map(string $input_name, ?callable $converter): array
+function parse_into_chunks_map(string $input_name, ?callable $converter, string $separator = ""): array
 {
     $arr = parse_into_arr($input_name, NULL, FALSE);
     $map = [];
@@ -51,7 +51,7 @@ function parse_into_chunks_map(string $input_name, ?callable $converter): array
     $contents = [];
     foreach ($arr as $value)
     {
-        if (empty($value))
+        if ($value === $separator)
         {
             $map[$i] = $contents;
             $i++;
@@ -76,9 +76,9 @@ function parse_into_chunks_map(string $input_name, ?callable $converter): array
  *          [0] => [6000]
  *          [1] => [8000]
  */
-function parse_into_sum_map(string $input_name, callable $converter): array
+function parse_into_sum_map(string $input_name, callable $converter, string $separator = ""): array
 {
-    $map = parse_into_chunks_map($input_name, $converter);
+    $map = parse_into_chunks_map($input_name, $converter, $separator);
     $sum_map = [];
     foreach ($map as $k => $v)
         $sum_map[$k] = array_sum($v);
