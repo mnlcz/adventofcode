@@ -45,9 +45,7 @@ function parse_into_arr(string $input_name, ?callable $converter, bool $filter_e
  */
 function parse_into_chunks_map(string $input_name, ?callable $converter, string $separator = ""): array
 {
-    $arr = parse_into_arr($input_name, NULL, FALSE);
-    $map = $separator === "" ? blank_separator_logic($arr, $converter) : default_logic($arr, $converter, $separator);
-    return $map;
+    return $separator === "" ? blank_separator_logic($input_name, $converter) : default_logic($input_name, $converter, $separator);
 }
 
 /**
@@ -73,8 +71,9 @@ function parse_into_sum_map(string $input_name, callable $converter, string $sep
 }
 
 // HELPER FUNCTIONS
-function blank_separator_logic(array $arr, ?callable $converter): array
+function blank_separator_logic(string $input_name, ?callable $converter): array
 {
+    $arr = parse_into_arr($input_name, NULL, FALSE);
     $separator = "";
     $i = 0;
     $contents = [];
@@ -93,8 +92,9 @@ function blank_separator_logic(array $arr, ?callable $converter): array
     return $map;
 }
 
-function default_logic(array $arr, ?callable $converter, string $separator): array
+function default_logic(string $input_name, ?callable $converter, string $separator): array
 {
+    $arr = parse_into_arr($input_name, NULL, TRUE);
     $map = [];
     $i = 0;
     foreach ($arr as $value)
