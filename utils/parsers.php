@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * IF $converter is NULL:
+ *      OUT: STRING_ARRAY
+ * ELSE:
+ *      OUT: ARRAY of type $converter result
+ *
+ * Example:
+ *      IN: $converter = 'intval' 
+ *      OUT: INT ARRAY
+ */
+function parse_into_arr(string $input_name, ?callable $converter, bool $filter_empties = TRUE): array
+{
+    $year = 2022;
+    $in = file_get_contents("../$year/inputs/$input_name.txt");
+    $arr = explode("\n", $in);
+    if ($filter_empties)
+        $arr = array_filter($arr);
+    return is_null($converter) ? $arr : array_map($converter, $arr);
+}
+
+/**
+ * IF $converter is NULL:
+ *      OUT: MAP where:
+ *          INT KEY = sample chunk index
+ *          STRING_ARRAY VALUE = input values until separator
+ * ELSE:
+ *      OUT: MAP where:
+ *          INT KEY = sample chunk index
+ *          $converter result ARRAY VALUE = input value until separator
+ *
+ *  Example:
+ *      SAMPLE TEXT:
+ *          1000
+ *          5000
+ *
+ *          2000
+ *          6000
+ *      IN: $converter = 'intval'
+ *      OUT: MAP of type [INT, INT_ARRAY]
+ *          [0] => [1000, 5000]
+ *          [1] => [2000, 6000]
+ *          
+ */
+function parse_into_chunks_map(string $input_name, ?callable $converter): array
+{
+    $arr = parse_into_arr($input_name, NULL, FALSE);
+    $map = [];
+    $i = 0;
+    $contents = [];
+    foreach ($arr as $value)
+    {
+        if (empty($value))
+        {
+            $map[$i] = $contents;
+            $i++;
+            $contents = [];
+        }
+        else
+            $contents[] = is_null($converter) ? $value : call_user_func($converter, $value);
+    }
+    return $map;
+}
+
+/**
+ *  Example:
+ *      SAMPLE TEXT:
+ *          1000
+ *          5000
+ *
+ *          2000
+ *          6000
+ *      IN: $converter = 'intval'
+ *      OUT: MAP of type [INT, INT]
+ *          [0] => [6000]
+ *          [1] => [8000]
+ */
+function parse_into_sum_map(string $input_name, callable $converter): array
+{
+    $map = parse_into_chunks_map($input_name, $converter);
+    $sum_map = [];
+    foreach ($map as $k => $v)
+        $sum_map[$k] = array_sum($v);
+    return $sum_map;
+}
