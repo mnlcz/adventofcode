@@ -26,9 +26,9 @@ function part1($sums)
     echo "Part 1: $sums[0]\n"; 
 }
 
-function part2($sum)
+function part2($sums)
 {
-    $sum = $sum[0] + $sum[1] + $sum[2];
+    $sum = $sums[0] + $sums[1] + $sums[2];
     echo "Part 2: $sum";
 }
 
