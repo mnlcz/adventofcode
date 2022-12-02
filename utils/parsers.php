@@ -46,20 +46,7 @@ function parse_into_arr(string $input_name, ?callable $converter, bool $filter_e
 function parse_into_chunks_map(string $input_name, ?callable $converter, string $separator = ""): array
 {
     $arr = parse_into_arr($input_name, NULL, FALSE);
-    $map = [];
-    $i = 0;
-    $contents = [];
-    foreach ($arr as $value)
-    {
-        if ($value === $separator)
-        {
-            $map[$i] = $contents;
-            $i++;
-            $contents = [];
-        }
-        else
-            $contents[] = is_null($converter) ? $value : call_user_func($converter, $value);
-    }
+    $map = $separator === "" ? blank_separator_logic($arr, $converter) : default_logic($arr, $converter, $separator);
     return $map;
 }
 
@@ -83,4 +70,37 @@ function parse_into_sum_map(string $input_name, callable $converter, string $sep
     foreach ($map as $k => $v)
         $sum_map[$k] = array_sum($v);
     return $sum_map;
+}
+
+// HELPER FUNCTIONS
+function blank_separator_logic(array $arr, ?callable $converter): array
+{
+    $separator = "";
+    $i = 0;
+    $contents = [];
+    $map = [];
+    foreach ($arr as $value)
+    {
+        if ($value === $separator)
+        {
+            $map[$i] = $contents;
+            $i++;
+            $contents = [];
+        }
+        else
+            $contents[] = is_null($converter) ? $value : call_user_func($converter, $value);
+    }
+    return $map;
+}
+
+function default_logic(array $arr, ?callable $converter, string $separator): array
+{
+    $map = [];
+    $i = 0;
+    foreach ($arr as $value)
+    {
+        $map[$i] = explode($separator, $value);
+        $i++;
+    }
+    return $map;
 }
