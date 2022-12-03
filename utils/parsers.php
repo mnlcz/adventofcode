@@ -10,13 +10,17 @@
  *      IN: $converter = 'intval' 
  *      OUT: INT ARRAY
  */
-function parse_into_arr(string $input_name, ?callable $converter, bool $filter_empties = TRUE): array
+function parse_into_arr(string $input_name, ?callable $converter, bool $filter_empties = TRUE, bool $fix_carriage_return = FALSE): array
 {
     $year = 2022;
     $in = file_get_contents("../$year/inputs/$input_name.txt");
     $arr = explode("\n", $in);
     if ($filter_empties)
         $arr = array_filter($arr);
+    if ($fix_carriage_return)
+    {
+        $arr = array_map('rtrim', $arr);
+    }
     return is_null($converter) ? $arr : array_map($converter, $arr);
 }
 
