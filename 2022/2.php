@@ -66,7 +66,6 @@ class Relationship
             $map = self::$draw;
         elseif ($option === "l")
             $map = self::$lose;
-
         foreach ($map as $k => $v)
         {
             if ($v === $opponent)
