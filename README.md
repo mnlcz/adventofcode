@@ -11,5 +11,5 @@ My advent of code solutions in PHP.
   - [x] Part 1
   - [x] Part 2
 - Day 4:
-  - [ ] Part 1
+  - [x] Part 1
   - [ ] Part 2
