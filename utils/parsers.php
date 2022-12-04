@@ -24,6 +24,7 @@ function parse_into_arr(string $input_name, ?callable $converter, bool $filter_e
     return is_null($converter) ? $arr : array_map($converter, $arr);
 }
 
+
 /**
  * IF $converter is NULL:
  *      OUT: MAP where:
@@ -52,6 +53,7 @@ function parse_into_chunks_map(string $input_name, ?callable $converter, string 
     return $separator === "" ? blank_separator_logic($input_name, $converter) : default_logic($input_name, $converter, $separator);
 }
 
+
 /**
  *  Example:
  *      SAMPLE TEXT:
@@ -74,7 +76,37 @@ function parse_into_sum_map(string $input_name, callable $converter, string $sep
     return $sum_map;
 }
 
-// HELPER FUNCTIONS
+
+/**
+ * Example:
+ *      IN:
+ *          $in = "1-2-3-4"
+ *          $separator = "-"
+ *      OUT: 
+ *          [1, 2, 3, 4]
+ */
+function str_get_ints(string $in, string $separator): array
+{
+    return array_map('intval', explode($separator, $in));
+}
+
+
+/**
+ * Example:
+ *      IN:
+ *          $in = "1-3"
+ *          $separator = "-"
+ *      OUT:
+ *          [1, 2, 3]
+ */
+function str_get_range(string $in, string $separator): array
+{
+    [$l, $r] = str_get_ints($in, $separator);
+    return range($l, $r);
+}
+
+
+// ---------------------------- IGNORE BELOW ----------------------------
 function blank_separator_logic(string $input_name, ?callable $converter): array
 {
     $arr = parse_into_arr($input_name, NULL, FALSE);
