@@ -98,7 +98,7 @@ function blank_separator_logic(string $input_name, ?callable $converter): array
 
 function default_logic(string $input_name, ?callable $converter, string $separator): array
 {
-    $arr = parse_into_arr($input_name, NULL, TRUE);
+    $arr = parse_into_arr($input_name, $converter);
     $map = [];
     $i = 0;
     foreach ($arr as $value)

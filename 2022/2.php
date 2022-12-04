@@ -6,7 +6,7 @@ $in = parse_into_chunks_map("2", NULL, " ");
 part1($in);
 part2($in);
 
-function part1(array $in)
+function part1(array $in): void
 {
     $total = 0;
     foreach ($in as $round)
@@ -14,7 +14,7 @@ function part1(array $in)
     echo "Part 1: $total\n";
 }
 
-function part2(array $in)
+function part2(array $in): void
 {
     $total = 0;
     foreach ($in as $round)
@@ -81,19 +81,11 @@ class Relationship
 function calculate_score(array $round): int
 {
     [$opponent, $mine] = $round;
-    $score = 0;
-    switch ($mine)
-    {
-        case "X":
-            $score = 1;
-            break;
-        case "Y":
-            $score = 2;
-            break;
-        default:
-            $score = 3;
-            break;
-    }
+    $score = match ($mine) {
+        "X" => 1,
+        "Y" => 2,
+        default => 3,
+    };
     $score += round_result($opponent, $mine);
     return $score;
 }
@@ -110,13 +102,10 @@ function round_result(string $opponent, string $mine): int
 
 function get_outcome(string $letter): string
 {
-    $out = "";
-    switch($letter)
-    {
-        case "X": $out = "l"; break;
-        case "Y": $out = "d"; break;
-        default: $out = "w"; break;
-    }
-    return $out;
+    return match ($letter) {
+        "X" => "l",
+        "Y" => "d",
+        default => "w",
+    };
 }
 

@@ -6,7 +6,7 @@ $in = parse_into_arr("3", NULL);
 part1($in);
 part2($in);
 
-function part1(array $in)
+function part1(array $in): void
 {
     $sum = 0;
     foreach ($in as $rucksack)
@@ -18,7 +18,7 @@ function part1(array $in)
     echo "Part 1: $sum\n";
 }
 
-function part2(array $in)
+function part2(array $in): void
 {
     $groups = separate_into_groups($in);
     $sum = 0;
@@ -63,7 +63,7 @@ function get_value(string $char): int
     return ctype_upper($char) ? $value + 27 : $value + 1;
 }
 
-function find_value(string $search, array $arr)
+function find_value(string $search, array $arr): int
 {
     $value = 0;
     foreach ($arr as $char)
