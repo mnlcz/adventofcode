@@ -27,7 +27,7 @@ function str_to_ranges(array &$in): void
         [$elf1, $elf2] = $pair;
         $rng1 = str_get_range($elf1, "-");
         $rng2 = str_get_range($elf2, "-");
-        $in[$k] = [ $rng1, $rng2];
+        $in[$k] = [$rng1, $rng2];
     }
 }
 
