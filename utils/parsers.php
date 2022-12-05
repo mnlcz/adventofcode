@@ -125,6 +125,7 @@ function blank_separator_logic(string $input_name, ?callable $converter): array
         else
             $contents[] = is_null($converter) ? $value : call_user_func($converter, $value);
     }
+    $map[] = $contents;
     return $map;
 }
 
