@@ -17,5 +17,8 @@ My advent of code solutions in PHP.
   - [x] Part 1
   - [x] Part 2
 - Day 6:
+  - [x] Part 1
+  - [x] Part 2
+- Day 7:
   - [ ] Part 1
   - [ ] Part 2
