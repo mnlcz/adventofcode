@@ -12,40 +12,45 @@
  *      OUT: 
  *          INT ARRAY => [100, 200, 300]
  */
-function parse_into_arr(string $input_name, ?callable $converter, bool $filter_empties = TRUE, bool $fix_carriage_return = FALSE): array
+function parse_into_arr(string $input_name, string $separator, ?callable $converter): array
 {
     $year = 2022;
     $in = file_get_contents("../$year/inputs/$input_name.txt");
-    $arr = explode("\n", $in);
-    if ($filter_empties)
-        $arr = array_filter($arr);
-    if ($fix_carriage_return)
-    {
-        $arr = array_map('rtrim', $arr);
-    }
+    fix_win_carriage_return($separator, $in);
+    $in = rtrim($in);
+    $arr = explode($separator, $in);
     return is_null($converter) ? $arr : array_map($converter, $arr);
 }
 
 
 /**
- *  Example:
+ * Example:
  *      IN:
  *          TEXT:
- *              1000
- *              5000
+ *              100
+ *              200
  *
- *              2000
- *              6000
- *          CALLABLE: 'intval'
+ *              300
+ *              400
+ *          SEPARATOR1: \n\n
+ *          SEPARATOR2: \n
+ *          CONVERTER: 'intval'
  *
- *      OUT: 
- *          MAP of type [INT, INT_ARRAY]
- *              [0] => [1000, 5000]
- *              [1] => [2000, 6000]
+ *      OUT:
+ *          INT ARRAY => [[100, 200], [300, 400]]
  */
-function parse_into_chunks_map(string $input_name, ?callable $converter, string $separator = ""): array
+function parse_into_arr_multi_separator(string $input_name, string $separator1, string $separator2, ?callable $converter): array
 {
-    return $separator === "" ? blank_separator_logic($input_name, $converter) : default_logic($input_name, $converter, $separator);
+    $in = parse_into_arr($input_name, $separator1, NULL);
+    $out = [];
+    foreach ($in as $elements)
+    {
+        if (fix_win_carriage_return($separator2, $elements))
+            break;
+    }
+    foreach ($in as $elements)
+        $out[] = is_null($converter) ? explode($separator2, $elements) : array_map($converter, explode($separator2, $elements));
+    return $out;
 }
 
 
@@ -61,13 +66,11 @@ function parse_into_chunks_map(string $input_name, ?callable $converter, string 
  *          CALLABLE: 'intval'
  *
  *      OUT: 
- *          MAP of type [INT, INT]
- *              [0] => [6000]
- *              [1] => [8000]
+ *          INT ARRAY => [6000, 8000]
  */
-function parse_into_sum_map(string $input_name, callable $converter, string $separator = ""): array
+function parse_into_sum(string $input_name, string $separator1, string $separator2, callable $converter): array
 {
-    $map = parse_into_chunks_map($input_name, $converter, $separator);
+    $map = parse_into_arr_multi_separator($input_name, $separator1, $separator2, $converter);
     $sum_map = [];
     foreach ($map as $k => $v)
         $sum_map[$k] = array_sum($v);
@@ -106,38 +109,20 @@ function str_get_range(string $in, string $separator): array
 }
 
 
-// ---------------------------- IGNORE BELOW ----------------------------
-function blank_separator_logic(string $input_name, ?callable $converter): array
+/**
+ * Example:
+ *      IN:
+ *          SEPARATOR: "\n"
+ *          STRING: "Hello\r\n"
+ *      OUT:
+ *          SEPARATOR: "\r\n"
+ */
+function fix_win_carriage_return(string &$separator, string $in): bool
 {
-    $arr = parse_into_arr($input_name, NULL, FALSE);
-    $separator = "";
-    $i = 0;
-    $contents = [];
-    $map = [];
-    foreach ($arr as $value)
+    if (str_contains($separator, "\n") && str_contains($in, "\r"))
     {
-        if ($value === $separator)
-        {
-            $map[$i] = $contents;
-            $i++;
-            $contents = [];
-        }
-        else
-            $contents[] = is_null($converter) ? $value : call_user_func($converter, $value);
+        $separator = str_replace("\n", "\r\n", $separator);
+        return true;
     }
-    $map[] = $contents;
-    return $map;
-}
-
-function default_logic(string $input_name, ?callable $converter, string $separator): array
-{
-    $arr = parse_into_arr($input_name, $converter);
-    $map = [];
-    $i = 0;
-    foreach ($arr as $value)
-    {
-        $map[$i] = explode($separator, $value);
-        $i++;
-    }
-    return $map;
+    return false;
 }
