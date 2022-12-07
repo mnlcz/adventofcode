@@ -2,7 +2,7 @@
 
 require "../utils/parsers.php";
 
-$in = parse_into_arr("3", NULL);
+$in = parse_into_arr("3", "\n", NULL);
 part1($in);
 part2($in);
 

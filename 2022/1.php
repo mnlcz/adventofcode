@@ -13,7 +13,7 @@ function part2(array $sorted_sums): void
     echo "Part 2: $top3";
 }
 
-$in = parse_into_sum_map("1", 'intval');
+$in = parse_into_sum("1", "\n\n", "\n", 'intval');
 arsort($in);
 $in = array_values($in);
 part1($in);

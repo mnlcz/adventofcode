@@ -2,7 +2,7 @@
 
 require "../utils/parsers.php";
 
-$in = parse_into_chunks_map("4", NULL, ",");
+$in = parse_into_arr_multi_separator("4", "\n", ",", NULL);
 part1($in);
 part2($in);
 

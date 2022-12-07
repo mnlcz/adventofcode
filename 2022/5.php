@@ -2,7 +2,7 @@
 
 require "../utils/parsers.php";
 
-[$crates, $moves] = parse_into_chunks_map("5", NULL);
+[$crates, $moves] = parse_into_arr_multi_separator("5", "\n\n", "\n", NULL);
 $qs = get_queues($crates);
 $mvs = get_moves($moves);
 part1($qs, $mvs);
