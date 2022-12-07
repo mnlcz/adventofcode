@@ -1,14 +1,16 @@
 <?php
 
 /**
- * IF $converter is NULL:
- *      OUT: STRING_ARRAY
- * ELSE:
- *      OUT: ARRAY of type $converter result
- *
  * Example:
- *      IN: $converter = 'intval' 
- *      OUT: INT ARRAY
+ *      IN:
+ *          TEXT:
+ *              100
+ *              200
+ *              300
+ *          CALLABLE: 'intval'
+ *
+ *      OUT: 
+ *          INT ARRAY => [100, 200, 300]
  */
 function parse_into_arr(string $input_name, ?callable $converter, bool $filter_empties = TRUE, bool $fix_carriage_return = FALSE): array
 {
@@ -26,27 +28,20 @@ function parse_into_arr(string $input_name, ?callable $converter, bool $filter_e
 
 
 /**
- * IF $converter is NULL:
- *      OUT: MAP where:
- *          INT KEY = sample chunk index
- *          STRING_ARRAY VALUE = input values until separator
- * ELSE:
- *      OUT: MAP where:
- *          INT KEY = sample chunk index
- *          $converter result ARRAY VALUE = input value until separator
- *
  *  Example:
- *      SAMPLE TEXT:
- *          1000
- *          5000
+ *      IN:
+ *          TEXT:
+ *              1000
+ *              5000
  *
- *          2000
- *          6000
- *      IN: $converter = 'intval'
- *      OUT: MAP of type [INT, INT_ARRAY]
- *          [0] => [1000, 5000]
- *          [1] => [2000, 6000]
- *          
+ *              2000
+ *              6000
+ *          CALLABLE: 'intval'
+ *
+ *      OUT: 
+ *          MAP of type [INT, INT_ARRAY]
+ *              [0] => [1000, 5000]
+ *              [1] => [2000, 6000]
  */
 function parse_into_chunks_map(string $input_name, ?callable $converter, string $separator = ""): array
 {
@@ -56,16 +51,19 @@ function parse_into_chunks_map(string $input_name, ?callable $converter, string 
 
 /**
  *  Example:
- *      SAMPLE TEXT:
- *          1000
- *          5000
+ *      IN:
+ *          TEXT:
+ *              1000
+ *              5000
  *
- *          2000
- *          6000
- *      IN: $converter = 'intval'
- *      OUT: MAP of type [INT, INT]
- *          [0] => [6000]
- *          [1] => [8000]
+ *              2000
+ *              6000
+ *          CALLABLE: 'intval'
+ *
+ *      OUT: 
+ *          MAP of type [INT, INT]
+ *              [0] => [6000]
+ *              [1] => [8000]
  */
 function parse_into_sum_map(string $input_name, callable $converter, string $separator = ""): array
 {
@@ -80,10 +78,11 @@ function parse_into_sum_map(string $input_name, callable $converter, string $sep
 /**
  * Example:
  *      IN:
- *          $in = "1-2-3-4"
- *          $separator = "-"
- *      OUT: 
- *          [1, 2, 3, 4]
+ *          STRING: "1-2-3-4"
+ *          SEPARATOR = "-"
+ *
+ *      OUT:
+ *          INT ARRAY => [1, 2, 3, 4]
  */
 function str_get_ints(string $in, string $separator): array
 {
@@ -94,10 +93,11 @@ function str_get_ints(string $in, string $separator): array
 /**
  * Example:
  *      IN:
- *          $in = "1-3"
- *          $separator = "-"
+ *          STRING: "1-3"
+ *          SEPARATOR: "-"
+ *
  *      OUT:
- *          [1, 2, 3]
+ *          INT ARRAY => [1, 2, 3]
  */
 function str_get_range(string $in, string $separator): array
 {
