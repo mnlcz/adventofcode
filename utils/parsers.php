@@ -79,7 +79,7 @@ function parse_into_sum_map(string $input_name, callable $converter, string $sep
  * Example:
  *      IN:
  *          STRING: "1-2-3-4"
- *          SEPARATOR = "-"
+ *          SEPARATOR: "-"
  *
  *      OUT:
  *          INT ARRAY => [1, 2, 3, 4]
