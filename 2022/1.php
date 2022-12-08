@@ -1,6 +1,6 @@
 <?php
 
-require "../utils/parsers.php";
+require "../utils/php/parsers.php";
 
 function part1(array $sorted_sums): void
 {
