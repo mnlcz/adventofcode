@@ -1,11 +1,14 @@
 # Advent of Code
 My advent of code solutions.
 ## 2022 in PHP
-- [x] [Day 1](2022/1.php)
-- [x] [Day 2](2022/2.php)
-- [x] [Day 3](2022/3.php)
-- [x] [Day 4](2022/4.php)
-- [x] [Day 5](2022/5.php)
-- [x] [Day 6](2022/6.php)
-- [x] [Day 7](2022/7.php)
-- [ ] [Day 8](2022/8.php)
+
+| Day  | Part 1 | Part 2 |  Solution |
+| :---: | :---: | :---: | :---:  |
+|  1   |   ✔   |   ✔   | [Here](2022/1.php)  |
+|  2   |   ✔   |   ✔   | [Here](2022/2.php)  |
+|  3   |   ✔   |   ✔   | [Here](2022/3.php)  |
+|  4   |   ✔   |   ✔   | [Here](2022/4.php)  |
+|  5   |   ✔   |   ✔   | [Here](2022/5.php)  |
+|  6   |   ✔   |   ✔   | [Here](2022/6.php)  |
+|  7   |   ✔   |   ✔   | [Here](2022/7.php)  |
+|  8   |   ✔   |   ❌  | [Here](2022/8.php)  |
