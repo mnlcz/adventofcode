@@ -1,5 +1,6 @@
 # Advent of Code
 My advent of code solutions.
+
 ## 2022 in PHP
 
 | Day  | Part 1 | Part 2 |  Solution |
