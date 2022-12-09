@@ -1,6 +1,5 @@
 # Advent of Code
 My advent of code solutions.
-
 ## 2022 in PHP
 
 | Day  | Part 1 | Part 2 |  Solution |
@@ -12,4 +11,4 @@ My advent of code solutions.
 |  5   |   ✔   |   ✔   | [Here](2022/5.php)  |
 |  6   |   ✔   |   ✔   | [Here](2022/6.php)  |
 |  7   |   ✔   |   ✔   | [Here](2022/7.php)  |
-|  8   |   ✔   |   ❌  | [Here](2022/8.php)  |
+|  8   |   ✔   |   ✔   | [Here](2022/8.php)  |
