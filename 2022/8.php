@@ -7,7 +7,7 @@ const HORIZONTAL = 1;
 const VERTICAL = 0;
 $height = count($in);
 $length = strlen($in[0]);
-/* part1($in); */
+part1($in);
 part2($in);
 
 function part1(array $in): void
