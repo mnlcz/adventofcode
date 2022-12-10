@@ -1,6 +1,6 @@
 <?php
 
-require "../utils/php/parsers.php";
+require "../../utils/php/parsers.php";
 
 $in = parse_into_arr("7", "\n", NULL);
 part1($in);

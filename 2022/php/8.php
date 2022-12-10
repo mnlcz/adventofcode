@@ -1,6 +1,6 @@
 <?php
 
-require "../utils/php/parsers.php";
+require "../../utils/php/parsers.php";
 
 $in = parse_into_arr("8", "\n", NULL);
 const HORIZONTAL = 1;

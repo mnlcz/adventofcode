@@ -1,6 +1,6 @@
 <?php
 
-$in = file_get_contents("./inputs/6.txt");
+$in = file_get_contents("../inputs/6.txt");
 part1($in);
 part2($in);
 
