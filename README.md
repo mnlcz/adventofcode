@@ -1,6 +1,7 @@
 # Advent of Code
 My advent of code solutions.
-## 2022 in PHP
+## 2022
+Days 1 to 8 in *PHP*, the rest in *C#*.
 
 | Day  | Part 1 | Part 2 |  Solution |
 | :---: | :---: | :---: | :---:  |
@@ -12,3 +13,4 @@ My advent of code solutions.
 |  6   |   ✔   |   ✔   | [Here](2022/php/6.php)  |
 |  7   |   ✔   |   ✔   | [Here](2022/php/7.php)  |
 |  8   |   ✔   |   ✔   | [Here](2022/php/8.php)  |
+|  9   |   ❌  |   ❌  | [Here](2022/csharp/Solutions/Day9.cs)  |
