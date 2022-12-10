@@ -15,7 +15,7 @@
 function parse_into_arr(string $input_name, string $separator, ?callable $converter): array
 {
     $year = 2022;
-    $in = file_get_contents("../$year/inputs/$input_name.txt");
+    $in = file_get_contents("../../$year/inputs/$input_name.txt");
     fix_win_carriage_return($separator, $in);
     $in = rtrim($in);
     $arr = explode($separator, $in);
