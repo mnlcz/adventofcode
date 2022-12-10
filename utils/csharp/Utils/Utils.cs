@@ -5,6 +5,8 @@ public static class Parser
     public static string[] IntoArray(string inputName, string separator = "\n")
     {
         var input = File.ReadAllText($"../../inputs/{inputName}.txt");
+        if (FixWindowsCarriageReturn(separator, input) is (true, var newSeparator))
+            separator = newSeparator;
         return input
             .Split(separator)
             .Where(l => !string.IsNullOrEmpty(l))
@@ -20,6 +22,12 @@ public static class Parser
     {
         var input = IntoArray(inputName, separator1);
         var output = new List<List<string>>();
+        foreach (var i in input)
+            if (FixWindowsCarriageReturn(separator2, i) is (true, var newSeparator))
+            {
+                separator2 = newSeparator;
+                break;
+            }
         foreach (var i in input)
             output.Add(i.Split(separator2).ToList());
         return output;
@@ -43,14 +51,18 @@ public static class Parser
         return output.ToArray();
     }
 
-    public static int[] Ints(string inputName, string separator) => 
-        Array.ConvertAll(inputName.Split(separator), int.Parse);
+    public static int[] Ints(string inputName, string separator) => Array.ConvertAll(inputName.Split(separator), int.Parse);
     
     public static int[] Range(string inputName, string separator)
     {
         var input = Ints(inputName, separator);
         var (x, y) = (input[0], input[1]);
         return Enumerable.Range(x, y).ToArray();
+    }
+
+    private static (bool, string) FixWindowsCarriageReturn(string separator, string input)
+    {
+        return input.Contains("\r\n") && separator.Contains('\n') ? (true, "\r\n") : (false, separator);
     }
 }
 
