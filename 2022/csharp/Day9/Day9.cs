@@ -1,6 +1,7 @@
 ﻿using Utils;
 
 var input = Parser.IntoArrayMultiSeparator("9", "\n", " ").Select(s => (s[0][0], int.Parse(s[1])));
+
 var h = new Point(0, 0);
 var t = new Point(0, 0);
 var knots = new Point[10];
@@ -11,6 +12,7 @@ var directions = new Dictionary<char, Point>
     ['L'] = new(-1, 0),
     ['D'] = new(0, -1)
 };
+
 Part1(input);
 Part2(input);
 
