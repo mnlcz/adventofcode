@@ -13,10 +13,8 @@ public static class Parser
             .ToArray();
     }
 
-    public static int[] IntoArrayInts(string inputName, string separator = "\n")
-    {
-        return Array.ConvertAll(IntoArray(inputName, separator), int.Parse);
-    }
+    public static int[] IntoArrayInts(string inputName, string separator = "\n") =>
+        Array.ConvertAll(IntoArray(inputName, separator), int.Parse);
 
     public static List<List<string>> IntoArrayMultiSeparator(string inputName, string separator1, string separator2)
     {
@@ -52,7 +50,7 @@ public static class Parser
     }
 
     public static int[] Ints(string inputName, string separator) => Array.ConvertAll(inputName.Split(separator), int.Parse);
-    
+
     public static int[] Range(string inputName, string separator)
     {
         var input = Ints(inputName, separator);
@@ -60,10 +58,8 @@ public static class Parser
         return Enumerable.Range(x, y).ToArray();
     }
 
-    private static (bool, string) FixWindowsCarriageReturn(string separator, string input)
-    {
-        return input.Contains("\r\n") && separator.Contains('\n') ? (true, "\r\n") : (false, separator);
-    }
+    private static (bool, string) FixWindowsCarriageReturn(string separator, string input) =>
+        input.Contains("\r\n") && separator.Contains('\n') ? (true, "\r\n") : (false, separator);
 }
 
 public static class Writer
@@ -86,4 +82,16 @@ public static class Writer
             Console.WriteLine();
         }
     }
+}
+
+public record struct Point(int x, int y)
+{
+    public override string ToString() => $"x: {x}, y: {y}";
+
+    public static Point operator +(Point one, Point other)
+    {
+        return new(one.x + other.x, one.y + other.y);
+    }
+
+    public int Chebyshev(Point other) => Math.Max(Math.Abs(x - other.x), Math.Abs(y - other.y));
 }
