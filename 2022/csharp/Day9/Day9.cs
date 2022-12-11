@@ -1,128 +1,47 @@
 ﻿using Utils;
 
-var input = Parser.IntoArrayMultiSeparator("9", "\n", " ").Select(s => (s[0], int.Parse(s[1])));
+var input = Parser.IntoArrayMultiSeparator("9", "\n", " ").Select(s => (s[0][0], int.Parse(s[1])));
+var h = new Point(0, 0);
+var t = new Point(0, 0);
+var directions = new Dictionary<char, Point>
+{
+    ['R'] = new(1, 0),
+    ['U'] = new(0, 1),
+    ['L'] = new(-1, 0),
+    ['D'] = new(0, -1)
+};
 Part1(input);
 
-static void Part1(IEnumerable<(string, int)> input)
+void Part1(IEnumerable<(char, int)> input)
 {
-    var rope = new Rope
+    var visited = new HashSet<Point> { t };
+    foreach (var m in input)
     {
-        Head = new Coordinate { X = 0, Y = 0 },
-        Tail = new Coordinate { X = 0, Y = 0 },
-        Visited = new HashSet<Coordinate>()
-    };
-    foreach (var move in input)
-        for (var i = 0; i < move.Item2; i++)
-            rope.Move(move.Item1[0]);
-    Console.WriteLine($"Part 1: {rope.Visited.Count}");
+        var dir = directions[m.Item1];
+        var n = m.Item2;
+        for (var i = 0; i < n; i++)
+        {
+            Move(dir);
+            visited.Add(t);
+        }
+    }
+    Console.WriteLine($"Part 1: {visited.Count}");
 }
 
-file record struct Coordinate
+static bool AreTouching(Point p1, Point p2)
 {
-    public required int X { get; init; }
-    public required int Y { get; init; }
+    return p1.Chebyshev(p2) <= 1;
+}
 
-    public override string ToString()
+void Move(Point direction)
+{
+    h += direction;
+    if (!AreTouching(h, t))
     {
-        return $"X: {X}\tY: {Y}";
-    }
-
-    public int Distance(Coordinate other)
-    {
-        return Math.Max(Math.Abs(X - other.X), Math.Abs(Y - other.Y));
+        var newX = h.x == t.x ? 0 : (h.x - t.x) / Math.Abs(h.x - t.x);
+        var newY = h.y == t.y ? 0 : (h.y - t.y) / Math.Abs(h.y - t.y);
+        t.x += newX;
+        t.y += newY;
     }
 }
 
-file sealed class Rope
-{
-    public required Coordinate Head { get; set; }
-    public required Coordinate Tail { get; set; }
-    public required HashSet<Coordinate> Visited { get; set; }
-
-    public void Move(char direction)
-    {
-        (Head, Tail) = direction switch
-        {
-            'U' => Up(),
-            'D' => Down(),
-            'R' => Right(),
-            'L' => Left(),
-            _ => throw new ArgumentException("{direction} is an invalid direction")
-        };
-        Visited.Add(Tail);
-    }
-
-    private (Coordinate head, Coordinate tail) Up()
-    {
-        var h = Head with { Y = Head.Y + 1 };
-        var t = Tail; 
-        if (h.Distance(t) == 2 && (h.X == t.X || h.Y == t.Y))
-        {
-            t = Tail with { Y = Tail.Y + 1 };
-        }
-        else if (h.Distance(t) > 1 && h.X != t.X && h.Y != t.Y)
-        {
-            t = h.X > t.X
-                ? Tail with { X = Tail.X + 1, Y = Tail.Y + 1 }
-                : Tail with { X = Tail.X - 1, Y = Tail.Y + 1 };
-        }
-        return (h, t);
-    }
-
-    private (Coordinate head, Coordinate tail) Down()
-    {
-        var h = Head with { Y = Head.Y - 1 }; // assume Y != 0
-        var t = Tail;
-        if (h.Distance(t) == 2 && (h.X == t.X || h.Y == t.Y))
-        {
-            t = Tail with { Y = Tail.Y - 1 };
-        }
-        else if (h.Distance(t) > 1 && h.X != t.X && h.Y != t.Y)
-        {
-            t = h.X > t.X
-                ? Tail with { X = Tail.X + 1, Y = Tail.Y - 1 }
-                : Tail with { X = Tail.X - 1, Y = Tail.Y - 1 };
-        }
-        return (h, t);
-    }
-
-    private (Coordinate head, Coordinate tail) Right()
-    {
-        var h = Head with { X = Head.X + 1 };
-        var t = Tail;
-        if (h.Distance(t) == 2 && (h.X == t.X || h.Y == t.Y))
-        {
-            t = Tail with { X = Tail.X + 1 };
-        }
-        else if (h.Distance(t) > 1 && h.X != t.X && h.Y != t.Y)
-        {
-            t = h.Y > t.Y
-                ? Tail with { X = Tail.X + 1, Y = Tail.Y + 1 }
-                : Tail with { X = Tail.X + 1, Y = Tail.Y - 1 };
-        }
-        return (h, t);
-    }
-
-    private (Coordinate head, Coordinate tail) Left()
-    {
-        var h = Head with { X = Head.X - 1 };
-        var t = Tail;
-        if (h.Distance(t) == 2 && (h.X == t.X || h.Y == t.Y))
-        {
-            t = Tail with { X = Tail.X - 1 };
-        }
-        else if (h.Distance(t) > 1 && h.X != t.X && h.Y != t.Y)
-        {
-            t = h.Y > t.Y
-                ? Tail with { X = Tail.X - 1, Y = Tail.Y + 1 }
-                : Tail with { X = Tail.X - 1, Y = Tail.Y - 1 };
-        }
-        return (h, t);
-
-    }
-
-    public override string ToString()
-    {
-        return $"Head: {Head}\nTail: {Tail}\n";
-    }
-}
