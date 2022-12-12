@@ -59,7 +59,9 @@ public static class Parser
     }
 
     private static (bool, string) FixWindowsCarriageReturn(string separator, string input) =>
-        input.Contains("\r\n") && separator.Contains('\n') ? (true, "\r\n") : (false, separator);
+        input.Contains("\r\n") && separator.Contains('\n') && !separator.Contains('\r')
+            ? (true, separator.Replace("\n", "\r\n"))
+            : (false, separator);
 }
 
 public static class Writer
