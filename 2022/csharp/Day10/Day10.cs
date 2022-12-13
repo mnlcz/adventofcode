@@ -75,9 +75,10 @@ static void Noop2(List<string> crt, ref string row, ref int spriteMidPx)
     CheckRow(crt, ref row);
 }
 
-static void Draw(ref string row, in int sprite) => row += IsRowInSprite(row.Length, sprite) ? "#" : ".";
+static void Draw(ref string row, int sprite) =>
+    row += IsRowInSprite(row.Length, sprite) ? "#" : ".";
 
-static bool IsRowInSprite(in int i, in int sprite) =>
+static bool IsRowInSprite(int i, int sprite) =>
     sprite == i || sprite - 1 == i || sprite + 1 == i;
 
 static void CheckRow(List<string> crt, ref string row)

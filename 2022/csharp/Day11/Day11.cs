@@ -108,7 +108,6 @@ file sealed class Monkey
         var m1 = $"Reciever if true: {Reciever1?.Number}\n";
         var m2 = $"Reciever if false: {Reciever2?.Number}\n";
         return number + items + divisor + m1 + m2 + "\n";
-
     }
 
     private static void GetBored(ref long worryLevel) => worryLevel /= 3;
