@@ -18,7 +18,7 @@ Days 1 to 8 in *PHP*, the rest in *C#*.
 |  8   |   ✔   |   ✔   | [Here](2022/php/8.php)  |
 |  9   |   ✔   |   ✔   | [Here](2022/csharp/Day9/Day9.cs)  |
 |  10  |   ✔   |   ✔   | [Here](2022/csharp/Day10/Day10.cs)  |
-|  11  |   ✔   |  ❌   | [Here](2022/csharp/Day11/Day11.cs)  |
+|  11  |   ✔   |  ✔    | [Here](2022/csharp/Day11/Day11.cs)  |
 |  12  |  ❌   |  ❌   |                         |
 |  13  |  ❌   |  ❌   |                         |
 |  14  |  ❌   |  ❌   |                         |

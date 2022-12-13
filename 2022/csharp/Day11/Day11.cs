@@ -1,15 +1,37 @@
 ﻿using Utils;
 
 var input = Parser.IntoArray("11", "\n\n").ToArray();
-var monkeys = CompleteMonkeys(input);
-Part1(monkeys);
+Part1(input);
+Part2(input);
 
-static void Part1(List<Monkey> monkeys)
+static void Part1(string[] input)
 {
+    var monkeys = CompleteMonkeys(input);
+
     for (var i = 0; i < 20; i++)
         foreach (var monkey in monkeys)
             monkey.Execute();
+
     Console.WriteLine($"Part 1: " + $"{monkeys
+            .Select(m => m.Inspections)
+            .OrderByDescending(i => i)
+            .Take(2)
+            .Aggregate((a, b) => a * b)}");
+}
+
+static void Part2(string[] input)
+{
+    var monkeys = CompleteMonkeys(input);
+    var bigMod = 1L;
+
+    foreach (var monkey in monkeys)
+        bigMod *= monkey.DivisibleNumber;
+
+    for (var i = 0; i < 10_000; i++)
+        foreach (var monkey in monkeys)
+            monkey.Execute(false, bigMod);
+
+    Console.Write($"Part 2: " + $"{monkeys
             .Select(m => m.Inspections)
             .OrderByDescending(i => i)
             .Take(2)
@@ -20,18 +42,21 @@ static List<Monkey> CompleteMonkeys(string[] input)
 {
     var monkeys = new List<Monkey>();
     var idxs = new List<(int, int)>();
+
     foreach (var block in input)
     {
         var (m, i) = ParseOne(block);
         monkeys.Add(m);
         idxs.Add(i);
     }
+
     for (var i = 0; i < monkeys.Count; i++)
     {
         var (r1, r2) = idxs[i];
         monkeys[i].Reciever1 = monkeys[r1];
         monkeys[i].Reciever2 = monkeys[r2];
     }
+
     return monkeys;
 }
 
@@ -84,14 +109,22 @@ file sealed class Monkey
     public Monkey? Reciever2 { get; set; }
     public long Inspections { get; set; } = 0;
 
-    public void Execute()
+    public void Execute(bool worried = true, long bigMod = -1)
     {
         while (Items.Count > 0)
         {
             Inspections++;
             var worryLevel = Items.Dequeue();
             worryLevel = Operation(worryLevel);
-            GetBored(ref worryLevel);
+
+            if (worried)
+                GetBored(ref worryLevel);
+            else
+            {
+                if (bigMod == -1)
+                    throw new ArgumentException($"{bigMod} should be changed");
+                worryLevel %= bigMod;
+            }
 
             if (worryLevel % DivisibleNumber == 0)
                 Reciever1!.Items.Enqueue(worryLevel);
@@ -107,6 +140,7 @@ file sealed class Monkey
         var divisor = $"Divisor: {DivisibleNumber}\n";
         var m1 = $"Reciever if true: {Reciever1?.Number}\n";
         var m2 = $"Reciever if false: {Reciever2?.Number}\n";
+
         return number + items + divisor + m1 + m2 + "\n";
     }
 
