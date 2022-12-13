@@ -4,7 +4,7 @@ public static class Parser
 {
     public static string[] IntoArray(string inputName, string separator = "\n")
     {
-        var input = File.ReadAllText($"../../inputs/{inputName}.txt");
+        var input = File.ReadAllText($"../../../../../inputs/{inputName}.txt");
         if (FixWindowsCarriageReturn(separator, input) is (true, var newSeparator))
             separator = newSeparator;
         return input
