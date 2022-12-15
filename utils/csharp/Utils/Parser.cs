@@ -2,6 +2,9 @@
 
 public static class Parser
 {
+    public static string Raw(string inputName) =>
+        File.ReadAllText($"../../../../../inputs/{inputName}.txt");
+
     public static string[] IntoArray(string inputName, string separator = "\n")
     {
         var input = File.ReadAllText($"../../../../../inputs/{inputName}.txt");
