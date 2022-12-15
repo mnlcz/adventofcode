@@ -63,17 +63,16 @@ static List<Monkey> CompleteMonkeys(string[] input)
 static (Monkey unfinishedMonkey, (int, int) recieverIndexes) ParseOne(string block)
 {
     var line = block.Split("\n");
+
     // Monkey number <=> Monkey index in collection
-    var number = uint.Parse(line[0].Replace(":", "").Split(" ")[1]);
+    var number = Parser.Between<uint>(line[0], " ", ":");
 
     // Items
-    var items = new Queue<long>();
-    var itemsUnparsed = line[1].Trim().Split(": ")[1].Split(", ");
-    foreach (var i in itemsUnparsed)
-        items.Enqueue(long.Parse(i));
+    var itemsList = Parser.After<long>(line[1], ": ", ", ");
+    var items = new Queue<long>(itemsList);
 
     // Operation
-    var split = line[2].Trim().Split("old ")[1].Split(" ");
+    var split = Parser.After(line[2], "old ").Split(" ");
     Func<long, long> operation = (split[0], split[1]) switch
     {
         ("*", "old") => (long other) => other * other,
@@ -83,9 +82,9 @@ static (Monkey unfinishedMonkey, (int, int) recieverIndexes) ParseOne(string blo
     };
 
     // Test
-    var divisor = int.Parse(line[3].Trim().Split("by ")[1]);
-    var reciever1 = int.Parse(line[4].Trim().Split("key ")[1]);
-    var reciever2 = int.Parse(line[5].Trim().Split("key ")[1]);
+    var divisor = Parser.After<int>(line[3], "by ");
+    var reciever1 = Parser.After<int>(line[4], "key ");
+    var reciever2 = Parser.After<int>(line[5], "key ");
 
     // Unfinished monkey
     var monkey = new Monkey
