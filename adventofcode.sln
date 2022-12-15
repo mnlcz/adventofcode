@@ -7,25 +7,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{30DD74B6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp", "csharp", "{81CB2E07-6120-488C-86A9-5B7CDE0E8127}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "utils\csharp\Utils\Utils.csproj", "{665C420A-96E0-4B74-8E4A-C1EAB2E36518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "utils\csharp\Utils\Utils.csproj", "{665C420A-96E0-4B74-8E4A-C1EAB2E36518}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2022", "2022", "{090A80FF-6785-4B79-82FD-208E747C9725}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp", "csharp", "{BBD2F255-794C-45F3-B7AF-126E7ED86777}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day9", "2022\csharp\Day9\Day9.csproj", "{A6846FB7-7E6B-437A-83B1-4D9CC1E7B834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day9", "2022\csharp\Day9\Day9.csproj", "{A6846FB7-7E6B-437A-83B1-4D9CC1E7B834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day10", "2022\csharp\Day10\Day10.csproj", "{0E757CE1-C85E-4492-875C-5D26683A747C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day10", "2022\csharp\Day10\Day10.csproj", "{0E757CE1-C85E-4492-875C-5D26683A747C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day11", "2022\csharp\Day11\Day11.csproj", "{DC840411-E3B7-40F2-B6ED-D7C6FEF7B90A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day11", "2022\csharp\Day11\Day11.csproj", "{DC840411-E3B7-40F2-B6ED-D7C6FEF7B90A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day12", "2022\csharp\Day12\Day12.csproj", "{213DA63C-083D-4939-A359-0EAA7642B656}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{665C420A-96E0-4B74-8E4A-C1EAB2E36518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,6 +43,13 @@ Global
 		{DC840411-E3B7-40F2-B6ED-D7C6FEF7B90A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC840411-E3B7-40F2-B6ED-D7C6FEF7B90A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC840411-E3B7-40F2-B6ED-D7C6FEF7B90A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{213DA63C-083D-4939-A359-0EAA7642B656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{213DA63C-083D-4939-A359-0EAA7642B656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{213DA63C-083D-4939-A359-0EAA7642B656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{213DA63C-083D-4939-A359-0EAA7642B656}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{81CB2E07-6120-488C-86A9-5B7CDE0E8127} = {30DD74B6-672B-4062-AD54-359D04C1695D}
@@ -52,5 +58,9 @@ Global
 		{A6846FB7-7E6B-437A-83B1-4D9CC1E7B834} = {BBD2F255-794C-45F3-B7AF-126E7ED86777}
 		{0E757CE1-C85E-4492-875C-5D26683A747C} = {BBD2F255-794C-45F3-B7AF-126E7ED86777}
 		{DC840411-E3B7-40F2-B6ED-D7C6FEF7B90A} = {BBD2F255-794C-45F3-B7AF-126E7ED86777}
+		{213DA63C-083D-4939-A359-0EAA7642B656} = {BBD2F255-794C-45F3-B7AF-126E7ED86777}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B965C424-742E-45E3-ABF7-A253AFEF489E}
 	EndGlobalSection
 EndGlobal
