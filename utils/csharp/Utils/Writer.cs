@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-
-namespace Utils;
+﻿namespace Utils;
 
 public static class Writer
 {
