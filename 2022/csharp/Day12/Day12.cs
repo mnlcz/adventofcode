@@ -1,6 +1,5 @@
 ﻿using Utils;
 
-
 var input = Parser.IntoGrid("12");
 var (graph, start, end) = Setup(input);
 Writer.Show(input);
