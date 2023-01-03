@@ -42,7 +42,6 @@ static Dictionary<Point, List<Point>> BuildGraph(Dictionary<Point, char> grid)
                 var n = current.Move(m);
                 if (n.x >= 0 && n.x <= l && n.y >= 0 && n.y <= h)
                     neighbours.Add(n);
-
             }
             graph[current] = neighbours;
         }
