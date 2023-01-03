@@ -1,4 +1,6 @@
-﻿namespace Utils;
+﻿using System.Security.Cryptography;
+
+namespace Utils;
 
 public static class Writer
 {
@@ -21,14 +23,34 @@ public static class Writer
         }
     }
 
-    public static void Show<T>(T[,] arr)
+    public static void Show<T>(T[,] matrix)
     {
-        var h = arr.GetLength(0);
-        var l = arr.GetLength(1);
+        var h = matrix.GetLength(0);
+        var l = matrix.GetLength(1);
         for (var i = 0; i < h; i++)
         {
             for (var j = 0; j < l; j++)
-                Console.Write(arr[i, j] + " ");
+                Console.Write(matrix[i, j] + " ");
+            Console.WriteLine();
+        }
+    }
+
+    public static void Show(Dictionary<Point, char> grid)
+    {
+        var h = grid
+            .Keys
+            .Select(k => k.y)
+            .Max();
+
+        var l = grid
+            .Keys
+            .Select(k => k.x)
+            .Max();
+        
+        for (var i = h; i >= 0; i--)
+        {
+            for (var j = 0; j <= l; j++)
+                Console.Write(grid[new Point(j, i)] + " ");
             Console.WriteLine();
         }
     }

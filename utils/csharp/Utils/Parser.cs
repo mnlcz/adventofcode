@@ -71,6 +71,22 @@ public static class Parser
         return output;
     }
 
+    public static Dictionary<Point, char> IntoGrid(string inputName)
+    {
+        var input = IntoArray(inputName).Reverse().ToArray();
+        var grid = new Dictionary<Point, char>();
+        var l = input[0].Length;
+        var h = input.Length;
+
+        for (var i = 0; i < h; i++)
+        {
+            for (var j = 0; j < l; j++)
+                grid[new Point(j, i)] = input[i][j];
+        }
+
+        return grid;
+    }
+
     public static string After(string input, string token) => input.Split(token)[1];
 
     public static T After<T>(string input, string token) where T : IParsable<T> =>
