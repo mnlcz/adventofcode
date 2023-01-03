@@ -20,4 +20,16 @@ public static class Writer
             Console.WriteLine();
         }
     }
+
+    public static void Show<T>(T[,] arr)
+    {
+        var h = arr.GetLength(0);
+        var l = arr.GetLength(1);
+        for (var i = 0; i < h; i++)
+        {
+            for (var j = 0; j < l; j++)
+                Console.Write(arr[i, j] + " ");
+            Console.WriteLine();
+        }
+    }
 }
