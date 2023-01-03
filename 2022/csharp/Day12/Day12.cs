@@ -2,7 +2,7 @@
 
 var input = Parser.IntoGrid("12");
 var (graph, start, end) = Setup(input);
-Writer.Show(input);
+// TODO: BFS shortest path
 
 static (Dictionary<Point, List<Point>>, Point, Point) Setup(Dictionary<Point, char> input) =>
 (
