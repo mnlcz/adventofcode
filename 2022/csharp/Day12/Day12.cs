@@ -27,7 +27,6 @@ static Dictionary<Point, List<Point>> BuildGraph(Dictionary<Point, char> grid)
         n.x >= 0 && n.x <= l && n.y >= 0 && n.y <= h;
     var isHigherElevation = (Point current, Point n) =>
         grid[current] == 'S' && grid[n] == 'a' ||
-        grid[current] == 'E' && grid[n] == 'z' ||
         grid[current] == 'z' && grid[n] == 'E' ||
         grid[n] - grid[current] is 1 or 0;
 
