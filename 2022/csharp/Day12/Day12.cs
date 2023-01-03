@@ -25,8 +25,11 @@ static Dictionary<Point, List<Point>> BuildGraph(Dictionary<Point, char> grid)
 
     var isValidNeighbour = (Point n) => 
         n.x >= 0 && n.x <= l && n.y >= 0 && n.y <= h;
-    var isHigherElevation = (Point current, Point n) => 
-        grid[current] == 'S' || grid[current] == 'E' || grid[n] - grid[current] is 1 or 0 || grid[current] == 'z' && grid[n] == 'E';
+    var isHigherElevation = (Point current, Point n) =>
+        grid[current] == 'S' && grid[n] == 'a' ||
+        grid[current] == 'E' && grid[n] == 'z' ||
+        grid[current] == 'z' && grid[n] == 'E' ||
+        grid[n] - grid[current] is 1 or 0;
 
     for (var i = 0; i <= h; i++)
     {
