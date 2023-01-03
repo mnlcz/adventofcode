@@ -7,14 +7,8 @@ var (graph, start, end) = Setup(input);
 static (Dictionary<Point, List<Point>>, Point, Point) Setup(Dictionary<Point, char> input) =>
 (
     BuildGraph(input),
-    input
-        .Where(kv => kv.Value == 'S')
-        .Select(kv => kv.Key)
-        .First(),
-    input
-        .Where(kv => kv.Value == 'E')
-        .Select(kv => kv.Key)
-        .First()
+    input.Where(kv => kv.Value == 'S').Select(kv => kv.Key).First(),
+    input.Where(kv => kv.Value == 'E').Select(kv => kv.Key).First()
 );
 
 static Dictionary<Point, List<Point>> BuildGraph(Dictionary<Point, char> grid)
