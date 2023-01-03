@@ -23,6 +23,11 @@ static Dictionary<Point, List<Point>> BuildGraph(Dictionary<Point, char> grid)
         .Select(k => k.x)
         .Max();
 
+    var isValidNeighbour = (Point n) => 
+        n.x >= 0 && n.x <= l && n.y >= 0 && n.y <= h;
+    var isHigherElevation = (Point current, Point n) => 
+        grid[current] == 'S' || grid[current] == 'E' || grid[n] - grid[current] is 1 or 0 || grid[current] == 'z' && grid[n] == 'E';
+
     for (var i = 0; i <= h; i++)
     {
         for (var j = 0; j <= l; j++)
@@ -33,7 +38,7 @@ static Dictionary<Point, List<Point>> BuildGraph(Dictionary<Point, char> grid)
             foreach (var m in moves)
             {
                 var n = current.Move(m);
-                if (n.x >= 0 && n.x <= l && n.y >= 0 && n.y <= h)
+                if (isValidNeighbour(n) && isHigherElevation(current, n))
                     neighbours.Add(n);
             }
             graph[current] = neighbours;
