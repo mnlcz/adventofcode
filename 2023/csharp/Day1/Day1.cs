@@ -2,7 +2,7 @@
 
 namespace Day1;
 
-public class Solution1 : ISolution
+public sealed class Solution1 : ISolution
 {
 	private static string[] Input(string filename) => Parser.IntoArray(filename);
 

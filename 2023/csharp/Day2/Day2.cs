@@ -2,7 +2,7 @@ using Utils;
 
 namespace Day2;
 
-public class Solution2 : ISolution
+public sealed class Solution2 : ISolution
 {
     public string Part1(string filename)
     {
