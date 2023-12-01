@@ -25,9 +25,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2023", "2023", "{92A02F21-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "csharp", "csharp", "{B545F8A9-3C65-4C61-9AF9-30700DED263D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Day1", "2023\csharp\Day1\Day1.csproj", "{67948FB4-576D-4AE4-BA42-BF9CEDD9B6A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Day1", "2023\csharp\Day1\Day1.csproj", "{67948FB4-576D-4AE4-BA42-BF9CEDD9B6A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingDay1", "2023\csharp\TestingDay1\TestingDay1.csproj", "{1AB31734-E072-4153-B445-97028B526D96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestingDay1", "2023\csharp\TestingDay1\TestingDay1.csproj", "{1AB31734-E072-4153-B445-97028B526D96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
