@@ -2,13 +2,13 @@
 
 public record struct Point(int x, int y)
 {
-    public override string ToString() => $"x: {x}, y: {y}";
+    public override readonly string ToString() => $"x: {x}, y: {y}";
 
     public static Point operator +(Point one, Point other) => new(one.x + other.x, one.y + other.y);
 
-    public int Chebyshev(Point other) => Math.Max(Math.Abs(x - other.x), Math.Abs(y - other.y));
+    public readonly int Chebyshev(Point other) => Math.Max(Math.Abs(x - other.x), Math.Abs(y - other.y));
 
-    public Point Move(Point direction) => this + direction;
+    public readonly Point Move(Point direction) => this + direction;
 }
 
 public readonly record struct Movement
