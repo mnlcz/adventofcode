@@ -4,8 +4,7 @@ namespace Day1;
 
 public class Solution1 : ISolution
 {
-	private static string[] Input(bool useSample, string sample)
-		=> Parser.IntoArray(useSample ? sample : "1");
+	private static string[] Input(bool useSample, string sample) => Parser.IntoArray(useSample ? sample : "1");
 
 	public string Part1(bool useSample = false, string sampleName = "")
 	{
