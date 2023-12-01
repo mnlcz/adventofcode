@@ -2,6 +2,6 @@
 
 public interface ISolution
 {
-	string Part1(bool useSample = false, string sample = "");
-	string Part2(bool useSample = false, string sample = "");
+	string Part1(string filename);
+	string Part2(string filename);
 }

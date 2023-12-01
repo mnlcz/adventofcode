@@ -55,7 +55,7 @@ public static class Writer
 
 	public static void Solution(ISolution solution)
 	{
-		Console.WriteLine($"Part 1: {solution.Part1()}");
-		Console.WriteLine($"Part 2: {solution.Part2()}");
+		Console.WriteLine($"Part 1: {solution.Part1("1")}");
+		Console.WriteLine($"Part 2: {solution.Part2("1")}");
 	}
 }

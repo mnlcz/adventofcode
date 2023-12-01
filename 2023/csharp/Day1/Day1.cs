@@ -4,22 +4,22 @@ namespace Day1;
 
 public class Solution1 : ISolution
 {
-	private static string[] Input(bool useSample, string sample) => Parser.IntoArray(useSample ? sample : "1");
+	private static string[] Input(string filename) => Parser.IntoArray(filename);
 
-	public string Part1(bool useSample = false, string sampleName = "")
+	public string Part1(string filename)
 	{
 		List<int> nums = [];
-		var parsed = Input(useSample, sampleName);
+		var parsed = Input(filename);
 		foreach (var l in parsed)
 			nums.Add(GetNumber(l));
 
 		return nums.Sum().ToString();
 	}
 
-	public string Part2(bool useSample = false, string sampleName = "")
+	public string Part2(string filename)
 	{
 		List<int> nums = [];
-		var parsed = Input(useSample, sampleName);
+		var parsed = Input(filename);
 		foreach (var l in parsed)
 			nums.Add(GetNumberAndString(l));
 
@@ -31,7 +31,7 @@ public class Solution1 : ISolution
 		var fst = line.ToList().Find(char.IsNumber);
 		var snd = line.Reverse().ToList().Find(char.IsNumber);
 
-		return int.Parse(fst.ToString() + snd.ToString());
+		return int.Parse(fst + snd.ToString());
 	}
 
 	public static int GetNumberAndString(string line)
@@ -54,9 +54,9 @@ public class Solution1 : ISolution
 	{
 		List<int> indexes = [];
 		var reps = 0;
-		while (line.IndexOf(value) != -1)
+		while (line.IndexOf(value, StringComparison.Ordinal) != -1)
 		{
-			var i = line.IndexOf(value);
+			var i = line.IndexOf(value, StringComparison.Ordinal);
 			indexes.Add(i + reps);
 			line = line[(i + value.Length)..];
 			reps += i + value.Length;
