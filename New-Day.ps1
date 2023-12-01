@@ -20,6 +20,30 @@ Set-Location $Path
 dotnet new console -o $ProjName
 dotnet new xunit -o $TestName
 
+Set-Location $ProjName
+New-Item "$ProjName.cs"
+
+$Template = @"
+using Utils;
+
+namespace $ProjName;
+
+public sealed class Solution$Day : ISolution
+{
+    public string Part1(string filename)
+    {
+        throw new NotImplementedException();
+    }
+
+    public string Part2(string filename)
+    {
+        throw new NotImplementedException();
+    }
+}
+"@
+
+Add-Content -Path "$ProjName.cs" -Value $Template -Encoding utf8
+
 Set-Location $Root
 
 dotnet sln add $ProjPath
