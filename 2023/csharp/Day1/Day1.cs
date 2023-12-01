@@ -13,6 +13,7 @@ public class Solution1 : ISolution
 		var parsed = Input(useSample, sampleName);
 		foreach (var l in parsed)
 			nums.Add(GetNumber(l));
+
 		return nums.Sum().ToString();
 	}
 
@@ -26,7 +27,7 @@ public class Solution1 : ISolution
 		return nums.Sum().ToString();
 	}
 
-	private static int GetNumber(string line)
+	public static int GetNumber(string line)
 	{
 		var fst = line.ToList().Find(char.IsNumber);
 		var snd = line.Reverse().ToList().Find(char.IsNumber);
@@ -34,25 +35,34 @@ public class Solution1 : ISolution
 		return int.Parse(fst.ToString() + snd.ToString());
 	}
 
-	private static int GetNumberAndString(string line)
+	public static int GetNumberAndString(string line)
 	{
-		Dictionary<string, int> idxs = [];
-		void getIndexes(IEnumerable<string> collection)
-		{
-			foreach (var s in collection)
-			{
-				var idx = line.IndexOf(s);
-				if (idx != -1)
-					idxs[s] = idx;
-			}
-		}
-		getIndexes(NumericString.Words);
-		getIndexes(NumericString.Digits);
-		var fst = idxs.MinBy(x => x.Value).Key;
-		var snd = idxs.MaxBy(x => x.Value).Key;
+		Dictionary<string, List<int>> idxs = [];
+		foreach (var d in NumericString.Digits)
+			idxs[d] = GetIndexes(line, d);
+		foreach (var w in NumericString.Words)
+			idxs[w] = GetIndexes(line, w);
+		var nums = idxs.Where(x => x.Value.Count > 0).ToList();
+		var fst = nums.MinBy(x => x.Value.Min()).Key;
+		var snd = nums.MaxBy(x => x.Value.Max()).Key;
 		fst = fst.Length > 1 ? NumericString.GetDigitFromString(fst) : fst;
 		snd = snd.Length > 1 ? NumericString.GetDigitFromString(snd) : snd;
 
 		return int.Parse(fst + snd);
+	}
+
+	public static List<int> GetIndexes(string line, string value)
+	{
+		List<int> indexes = [];
+		var reps = 0;
+		while (line.IndexOf(value) != -1)
+		{
+			var i = line.IndexOf(value);
+			indexes.Add(i + reps);
+			line = line[(i + value.Length)..];
+			reps += i + value.Length;
+		}
+
+		return indexes;
 	}
 }
