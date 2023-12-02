@@ -57,9 +57,9 @@ public static class Writer
 		}
 	}
 
-	public static void Solution(ISolution solution)
+	public static void Solution(ISolution solution, string filename)
 	{
-		Console.WriteLine($"Part 1: {solution.Part1("1")}");
-		Console.WriteLine($"Part 2: {solution.Part2("1")}");
+		Console.WriteLine($"Part 1: {solution.Part1(filename)}");
+		Console.WriteLine($"Part 2: {solution.Part2(filename)}");
 	}
 }
