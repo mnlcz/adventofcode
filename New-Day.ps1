@@ -51,5 +51,6 @@ dotnet sln add $TestPath
 
 dotnet add $ProjPath reference $UtilsPath
 dotnet add $TestPath reference $UtilsPath
+dotnet add $TestPath reference $ProjPath
 
 dotnet build
