@@ -2,11 +2,15 @@
 
 public static class Writer
 {
-	public static void Show<T>(T[] arr)
+	public static void Show<T>(IEnumerable<T> arr)
 	{
 		var t = typeof(T).Name;
-		for (var i = 0; i < arr.Length; i++)
-			Console.WriteLine($"[{i}] => ({t}): {arr[i]}");
+		var i = 0;
+		foreach (var v in arr)
+		{
+			Console.WriteLine($"[{i}] => ({t}): {v}");
+			i++;
+		}
 	}
 
 	public static void Show<T>(List<List<T>> list)
