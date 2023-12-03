@@ -44,6 +44,9 @@ public sealed class Solution$Day : ISolution
 
 Add-Content -Path "$ProjName.cs" -Value $Template -Encoding utf8
 
+Set-Location "$Path\$TestName"
+Rename-Item -Path "UnitTest1.cs" -NewName "PartsTest.cs"
+
 Set-Location $Root
 
 dotnet sln add $ProjPath
