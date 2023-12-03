@@ -1,8 +1,13 @@
 ﻿namespace Utils;
 
-public class Parser(string year)
+public class Parser
 {
-	private readonly string _inputsPath = $"./{year}/inputs";
+	private readonly string _inputsPath;
+
+	public Parser(string year)
+	{
+		_inputsPath = Directory.Exists($"./{year}/inputs") ? $"./{year}/inputs" : "../../../../../inputs";
+	}
 
 	public string Raw(string inputName) =>
 		File.ReadAllText($"{_inputsPath}/{inputName}.txt");
@@ -112,7 +117,7 @@ public class Parser(string year)
 	}
 
 	public static string Between(string input, string leftToken, string rightToken) =>
-        After(Before(input, rightToken), leftToken);
+		After(Before(input, rightToken), leftToken);
 
 	public static T Between<T>(string input, string leftToken, string rightToken) where T : IParsable<T>
 	{
