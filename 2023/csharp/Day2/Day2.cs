@@ -7,7 +7,7 @@ public sealed class Solution2 : ISolution
 {
 	private List<Game> Input(string filename)
 	{
-		var input = Parser.IntoArray(filename);
+		var input = new Parser("2023").IntoArray(filename);
 		List<Game> games = [];
 		foreach (var l in input)
 			games.Add(new Game(l));

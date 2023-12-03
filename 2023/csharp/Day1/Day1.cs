@@ -4,7 +4,7 @@ namespace Day1;
 
 public sealed class Solution1 : ISolution
 {
-	private static string[] Input(string filename) => Parser.IntoArray(filename);
+	private static string[] Input(string filename) => new Parser("2023").IntoArray(filename);
 
 	public string Part1(string filename)
 	{

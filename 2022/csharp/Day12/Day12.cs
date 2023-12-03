@@ -1,6 +1,7 @@
 ﻿using Utils;
 
-var input = Parser.IntoGrid("12");
+var parser = new Parser("2022");
+var input = parser.IntoGrid("12");
 var (graph, start, end) = Setup(input);
 // TODO: BFS shortest path
 

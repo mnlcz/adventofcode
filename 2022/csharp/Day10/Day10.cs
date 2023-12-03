@@ -1,6 +1,7 @@
 ﻿using Utils;
 
-var input = Parser.IntoArrayMultiSeparator("10", "\n", " ");
+var parser = new Parser("2022");
+var input = parser.IntoArrayMultiSeparator("10", "\n", " ");
 Part1(input);
 Part2(input);
 
