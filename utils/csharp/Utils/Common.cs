@@ -70,3 +70,19 @@ public static class NumericString
 		_ => throw new ArgumentException($"La string ${s} no posee un valor numerico valido")
 	};
 }
+
+public static class OutOfBoundsCheck
+{
+	public static bool Up(int index) => index - 1 >= 0;
+	public static bool Down(int index, int iLength) => index + 1 <= iLength - 1;
+	public static bool Left(int index) => index - 1 >= 0;
+	public static bool Right(int index, int jLength) => index + 1 <= jLength - 1;
+	public static bool UpLeft(int index1, int index2) =>
+		Up(index1) && Left(index2);
+	public static bool UpRight(int index1, int index2, int jLength) =>
+		Up(index1) && Right(index2, jLength);
+	public static bool DownLeft(int index1, int index2, int iLength) =>
+		Down(index1, iLength) && Left(index2);
+	public static bool DownRight(int index1, int index2, int iLength, int jLength) =>
+		Down(index1, iLength) && Right(index2, jLength);
+}
