@@ -1,13 +1,15 @@
 ﻿namespace Utils;
 
-public static class Parser
+public class Parser(string year)
 {
-	public static string Raw(string inputName) =>
-		File.ReadAllText($"../../../../../inputs/{inputName}.txt");
+	private readonly string _inputsPath = $"./{year}/inputs";
 
-	public static string[] IntoArray(string inputName, string separator = "\n")
+	public string Raw(string inputName) =>
+		File.ReadAllText($"{_inputsPath}/{inputName}.txt");
+
+	public string[] IntoArray(string inputName, string separator = "\n")
 	{
-		var input = File.ReadAllText($"../../../../../inputs/{inputName}.txt");
+		var input = File.ReadAllText($"{_inputsPath}/{inputName}.txt");
 		if (FixWindowsCarriageReturn(separator, input) is (true, var newSeparator))
 			separator = newSeparator;
 
@@ -17,9 +19,9 @@ public static class Parser
 			.ToArray();
 	}
 
-	public static T[] IntoArray<T>(string inputName, string separator = "\n") where T : IParsable<T>
+	public T[] IntoArray<T>(string inputName, string separator = "\n") where T : IParsable<T>
 	{
-		var input = File.ReadAllText($"../../../../../inputs/{inputName}.txt");
+		var input = File.ReadAllText($"{_inputsPath}/{inputName}.txt");
 		if (FixWindowsCarriageReturn(separator, input) is (true, var newSeparator))
 			separator = newSeparator;
 
@@ -30,7 +32,7 @@ public static class Parser
 			.ToArray();
 	}
 
-	public static List<List<string>> IntoArrayMultiSeparator(string inputName, string separator1, string separator2)
+	public List<List<string>> IntoArrayMultiSeparator(string inputName, string separator1, string separator2)
 	{
 		var input = IntoArray(inputName, separator1);
 		var output = new List<List<string>>();
@@ -48,7 +50,7 @@ public static class Parser
 		return output;
 	}
 
-	public static List<List<T>> IntoArrayMultiSeparator<T>(string inputName, string separator1, string separator2)
+	public List<List<T>> IntoArrayMultiSeparator<T>(string inputName, string separator1, string separator2)
 		where T : IParsable<T>
 	{
 		var inputStr = IntoArray(inputName, separator1)!;
@@ -71,7 +73,7 @@ public static class Parser
 		return output;
 	}
 
-	public static Dictionary<Point, char> IntoGrid(string inputName)
+	public Dictionary<Point, char> IntoGrid(string inputName)
 	{
 		var input = IntoArray(inputName).Reverse().ToArray();
 		var grid = new Dictionary<Point, char>();
@@ -110,7 +112,7 @@ public static class Parser
 	}
 
 	public static string Between(string input, string leftToken, string rightToken) =>
-		After(Before(input, rightToken), leftToken);
+        After(Before(input, rightToken), leftToken);
 
 	public static T Between<T>(string input, string leftToken, string rightToken) where T : IParsable<T>
 	{
@@ -125,7 +127,7 @@ public static class Parser
 		return After<T>(bef, leftToken, collectionSeparator);
 	}
 
-	public static int[] IntoSum(string inputName, string separator1, string separator2)
+	public int[] IntoSum(string inputName, string separator1, string separator2)
 	{
 		var input = IntoArrayMultiSeparator<int>(inputName, separator1, separator2);
 		var output = new List<int>();
