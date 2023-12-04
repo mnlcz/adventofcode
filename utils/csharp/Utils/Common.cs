@@ -71,7 +71,7 @@ public static class NumericString
 	};
 }
 
-public static class OutOfBoundsCheck
+public static class NotOutOfBoundsCheck
 {
 	public static bool Up(int index) => index - 1 >= 0;
 	public static bool Down(int index, int iLength) => index + 1 <= iLength - 1;
