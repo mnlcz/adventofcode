@@ -1,8 +1,10 @@
 using Utils;
+using Coord = (int, int);
+using NumCoord = (string, (int, int));
 
 namespace Day3;
 
-public sealed class Solution3 : ISolution
+public sealed partial class Solution3 : ISolution
 {
 	private static string[] Input(string filename) => new Parser("2023").IntoArray(filename);
 
@@ -59,167 +61,148 @@ public sealed class Solution3 : ISolution
 
 	public string Part2(string filename)
 	{
-		var input = Input(filename);
-		List<int> ratios = [];
-		for (var i = 0; i < input.Length; i++)
+		var lines = Input(filename);
+		var nums = GetNumsWithCoord(lines);
+		var gears = GetGearsCoord(lines);
+		var valids = GetValidGears(gears, nums);
+		var total = GetTotalRatio(valids);
+
+		return total.ToString();
+	}
+
+	static bool IsSymbol(char c) => !char.IsNumber(c) && c != '.';
+
+	private static long GetTotalRatio(Span<(int, int)> validGears)
+	{
+		long total = 0;
+
+		foreach (var parts in validGears)
+			total += parts.Item1 * parts.Item2;
+
+		return total;
+	}
+
+	private static (int, int)[] GetValidGears(Span<Coord> gears, Span<NumCoord> nums)
+	{
+		List<(int, int)> valids = [];
+
+		foreach (var gc in gears)
 		{
-			var line = input[i].AsSpan();
-			for (var j = 0; j < line.Length; j++)
+			var counter = 0;
+			List<string> candidates = [];
+			foreach (var nc in nums)
 			{
-				var character = input[i][j];
-				if (character == '*')
+				var num = nc.Item1;
+
+				if (IsClose(gc, nc))
 				{
-					(var isGear, var n1, var n2) = IsGear(input, i, j);
-					if (isGear)
+					counter++;
+					candidates.Add(num);
+				}
+			}
+			if (counter == 2)
+				valids.Add((int.Parse(candidates[0]), int.Parse(candidates[1])));
+
+		}
+
+		return [.. valids];
+	}
+
+	private static NumCoord[] GetNumsWithCoord(Span<string> lines)
+	{
+		var vlim = lines.Length;
+		var hlim = lines[0].Length;
+		var sNum = "";
+		List<NumCoord> nums = [];
+
+		for (var i = 0; i < vlim; i++)
+		{
+			var line = lines[i];
+			var (ci, cj) = (-1, -1);
+			for (var j = 0; j < hlim; j++)
+			{
+				var ch = line[j];
+				if (char.IsDigit(ch))
+				{
+					if (sNum == "") (ci, cj) = (i, j);
+					sNum += ch;
+				}
+				else
+				{
+					if (sNum.Length > 0)
 					{
-						ratios.Add(n1 * n2);
+						nums.Add((sNum, (ci, cj)));
+						sNum = "";
+						(ci, cj) = (-1, -1);
 					}
 				}
 			}
 		}
 
-		return ratios.Sum().ToString();
+		return [.. nums];
 	}
 
-	static bool IsSymbol(char c) => !char.IsNumber(c) && c != '.';
-
-	static (bool, int, int) IsGear(Span<string> input, int i, int j)
+	private static Coord[] GetGearsCoord(Span<string> lines)
 	{
-		var isGear = false;
-		int n1 = -1, n2 = -1;
-		var s1 = "";
+		var vlim = lines.Length;
+		var hlim = lines[0].Length;
+		List<Coord> cs = [];
 
-		if (NotOutOfBoundsCheck.Up(i) && char.IsNumber(input[i - 1][j]))
+		for (var i = 0; i < vlim; i++)
 		{
-			if (NotOutOfBoundsCheck.Left(j - 1)) s1 += input[i - 1][j - 2];
-			if (NotOutOfBoundsCheck.Left(j)) 
+			var line = lines[i];
+			for (var j = 0; j < hlim; j++)
 			{
-				if (!char.IsNumber(input[i - 1][j - 1])) s1 = "";
-				s1 += input[i - 1][j - 1]; 
+				var ch = line[j];
+				if (ch == '*') cs.Add((i, j));
 			}
-			s1 += input[i - 1][j];
-			if (NotOutOfBoundsCheck.Right(j, input[0].Length)) s1 += input[i - 1][j + 1];
-			if (NotOutOfBoundsCheck.Right(j + 1, input[0].Length))
-				if (char.IsNumber(s1.Last())) s1 += input[i - 1][j + 2]; 
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-				n1 = int.Parse(string.Join("", ns));
-			s1 = "";
 		}
-		if (NotOutOfBoundsCheck.Down(i, input.Length) && char.IsNumber(input[i + 1][j]))
-		{
-			if (NotOutOfBoundsCheck.Left(j - 1)) s1 += input[i + 1][j - 2];
-			if (NotOutOfBoundsCheck.Left(j)) 
-			{
-				if (!char.IsNumber(input[i + 1][j - 1])) s1 = "";
-				s1 += input[i + 1][j - 1]; 
-			}
-			s1 += input[i + 1][j];
-			if (NotOutOfBoundsCheck.Right(j, input[0].Length)) s1 += input[i + 1][j + 1];
-			if (NotOutOfBoundsCheck.Right(j + 1, input[0].Length)) 
-				if (char.IsNumber(s1.Last())) s1 += input[i + 1][j + 2];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (NotOutOfBoundsCheck.Left(j) && char.IsNumber(input[i][j - 1]) && n2 == -1)
-		{
-			if (NotOutOfBoundsCheck.Left(j - 2)) s1 += input[i][j - 3];
-			if (NotOutOfBoundsCheck.Left(j - 1)) s1 += input[i][j - 2];
-			s1 += input[i][j - 1];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (NotOutOfBoundsCheck.Right(j, input[i].Length) && char.IsNumber(input[i][j + 1]) && n2 == -1)
-		{
-			s1 += input[i][j + 1];
-			if (NotOutOfBoundsCheck.Right(j + 1, input[0].Length)) s1 += input[i][j + 2];
-			if (NotOutOfBoundsCheck.Right(j + 2, input[0].Length)) s1 += input[i][j + 3];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (NotOutOfBoundsCheck.UpLeft(i, j) && char.IsNumber(input[i - 1][j - 1]) && n2 == -1)
-		{
-			if (NotOutOfBoundsCheck.Left(j - 2)) s1 += input[i - 1][j - 3];
-			if (NotOutOfBoundsCheck.Left(j - 1)) s1 += input[i - 1][j - 2];
-			s1 += input[i - 1][j - 1];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (NotOutOfBoundsCheck.UpRight(i, j, input[i].Length) && char.IsNumber(input[i - 1][j + 1]) && n2 == -1)
-		{
-			s1 += input[i - 1][j + 1];
-			if (NotOutOfBoundsCheck.Right(j - 1, input[0].Length)) s1 += input[i - 1][j + 2];
-			if (NotOutOfBoundsCheck.Right(j - 2, input[0].Length)) s1 += input[i - 1][j + 3];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (NotOutOfBoundsCheck.DownLeft(i, j, input.Length) && char.IsNumber(input[i + 1][j - 1]) && n2 == -1)
-		{
-			if (NotOutOfBoundsCheck.Left(j - 2)) s1 += input[i + 1][j - 3];
-			if (NotOutOfBoundsCheck.Left(j - 1)) s1 += input[i + 1][j - 2];
-			s1 += input[i + 1][j - 1];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (NotOutOfBoundsCheck.DownRight(i, j, input.Length, input[i].Length) && char.IsNumber(input[i + 1][j + 1]) && n2 == -1)
-		{
-			s1 += input[i + 1][j + 1];
-			if (NotOutOfBoundsCheck.Right(j + 1, input[0].Length)) s1 += input[i + 1][j + 2];
-			if (NotOutOfBoundsCheck.Right(j + 2, input[0].Length)) s1 += input[i + 1][j + 3];
-			var ns = s1.Where(c => char.IsNumber(c));
-			if (ns.Any())
-			{
-				if (n1 == -1)
-					n1 = int.Parse(string.Join("", ns));
-				else
-					n2 = int.Parse(string.Join("", ns));
-			}
-			s1 = "";
-		}
-		if (n2 != -1) isGear = true;
 
-		return (isGear, n1, n2);
+		return [.. cs];
+	}
+
+	private static bool IsClose(Coord coord, NumCoord num)
+	{
+		var result = false;
+		var digitCoords = GetDigitCoords(num);
+		var surroundings = GetSurroundings(coord);
+
+		foreach (var surr in surroundings)
+			foreach (var dc in digitCoords)
+				if (surr == dc) result = true;
+
+		return result;
+	}
+
+	private static Coord[] GetDigitCoords(NumCoord num)
+	{
+		var numLen = num.Item1.Length;
+		var numI = num.Item2.Item1;
+		var numJ = num.Item2.Item2;
+		List<Coord> numCoords = [num.Item2];
+		var counter = 1;
+
+		while (counter != numLen)
+		{
+			numCoords.Add((numI, numJ + counter));
+			counter++;
+		}
+
+		return [.. numCoords];
+	}
+
+	private static Coord[] GetSurroundings(Coord coord)
+	{
+		var (ci, cj) = (coord.Item1, coord.Item2);
+		var up = (ci - 1, cj);
+		var down = (ci + 1, cj);
+		var left = (ci, cj - 1);
+		var right = (ci, cj + 1);
+		var upleft = (ci - 1, cj - 1);
+		var upright = (ci - 1, cj + 1);
+		var downleft = (ci + 1, cj - 1);
+		var downright = (ci + 1, cj + 1);
+
+		return [up, down, left, right, upleft, upright, downleft, downright];
 	}
 }
