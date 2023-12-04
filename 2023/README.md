@@ -8,3 +8,4 @@ My advent of code solutions.
 | :---: | :---: | :---: | :---:  |
 |  1   |   ✔   |   ✔   | [Here](csharp/Day1/Day1.cs)  |
 |  2   |   ✔   |   ✔   | [Here](csharp/Day2/Day2.cs)  |
+|  3   |   ✔   |   ❌   | [Here](csharp/Day2/Day3.cs)  |
