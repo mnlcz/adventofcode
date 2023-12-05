@@ -40,8 +40,8 @@ public sealed class Solution4 : ISolution
     private static int[] WinningNumbers(Span<string> card)
     {
         List<int> winningNumbers = [];
-        var winners = card[0].Split(" ").Where(i => i != "");
-        var candidates = card[1].Split(" ").Where(i => i != "");
+        var winners = card[0].Split(" ").Where(i => i != "").ToArray();
+        var candidates = card[1].Split(" ").Where(i => i != "").ToArray();
 
         foreach (var c in candidates)
         foreach (var w in winners)
@@ -58,9 +58,7 @@ public sealed class Solution4 : ISolution
         var points = 1;
 
         foreach (var _ in winningNumbers)
-        {
             points *= 2;
-        }
 
         return points / 2;
     }
