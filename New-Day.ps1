@@ -42,10 +42,34 @@ public sealed class Solution$Day : ISolution
 }
 "@
 
+$TestTemplate = @"
+using $ProjName;
+
+namespace TestingDay$Day;
+
+public class PartsTest
+{
+    private readonly Solution$Day _sol = new();
+
+    [Fact]
+    public void SamplePart1Test() => Assert.Equal("", _sol.Part1("${Day}Sample1"));
+
+    [Fact]
+    public void InputPart1Test() => Assert.Equal("", _sol.Part1("$Day"));
+
+    [Fact]
+    public void SamplePart2Test() => Assert.Equal("", _sol.Part2("${Day}Sample1"));
+
+    [Fact]
+    public void InputPart2Test() => Assert.Equal("", _sol.Part2("$Day"));
+}
+"@
+
 Add-Content -Path "$ProjName.cs" -Value $Template -Encoding utf8
 
 Set-Location "$Path\$TestName"
-Rename-Item -Path "UnitTest1.cs" -NewName "PartsTest.cs"
+Remove-Item -Path "UnitTest1.cs"
+Add-Content -Path "PartsTest.cs" -Value $TestTemplate -Encoding utf8
 
 Set-Location $Root
 
