@@ -13,14 +13,14 @@ public static class Writer
 		}
 	}
 
-	public static void Show<T>(List<List<T>> list)
+	public static void Show<T>(T[][] list)
 	{
 		var t = typeof(T).Name;
-		for (var i = 0; i < list.Count; i++)
+		for (var i = 0; i < list.Length; i++)
 		{
-			Console.Write($"[{i}] => ({t}[]): ");
-			foreach (var j in list[i])
-				Console.Write($"{j} ");
+			Console.Write($"[{i}] => ({t}[]): \n\t");
+			for (var j = 0; j < list[i].Length; j++)
+				Console.Write($"[{j}] => {list[i][j]}\n\t");
 			Console.WriteLine();
 		}
 	}
