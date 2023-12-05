@@ -5,7 +5,7 @@ var input = parser.IntoArrayMultiSeparator("10", "\n", " ");
 Part1(input);
 Part2(input);
 
-static void Part1(List<List<string>> input)
+static void Part1(Span<string[]> input)
 {
 	var x = 1;
 	var cycle = 0;
@@ -21,7 +21,7 @@ static void Part1(List<List<string>> input)
 	Console.WriteLine($"Part 1: {signals.Sum()}");
 }
 
-static void Part2(List<List<string>> input)
+static void Part2(Span<string[]> input)
 {
 	var spriteMidPx = 1;
 	var row = "";
