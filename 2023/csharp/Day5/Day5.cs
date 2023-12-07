@@ -1,3 +1,7 @@
+// TODO: change Info types from int to ulong
+// TODO: change mappings calculation to not use ranges. Really slow with the size of the numeric strings in the real input
+// Maybe find a math relation to get the mappings
+
 using System.Collections.ObjectModel;
 using Utils;
 using Info = (int dRange, int sRange, int len);
@@ -98,18 +102,17 @@ public sealed class Solution5 : ISolution
         return (int.Parse(s[0]), int.Parse(s[1]), int.Parse(s[2]));
     }
 
-    private ReadOnlySpan<string[]> Types(ReadOnlySpan<string> input) =>
-        new[]
-        {
-            Get(Type.Seed, input),
-            Get(Type.SeedToSoil, input),
-            Get(Type.SoilToFertilizer, input),
-            Get(Type.FertilizerToWater, input),
-            Get(Type.WaterToLight, input),
-            Get(Type.LightToTemperature, input),
-            Get(Type.TemperatureToHumidity, input),
-            Get(Type.HumidityToLocation, input)
-        }.AsSpan();
+    private ReadOnlySpan<string[]> Types(ReadOnlySpan<string> input) => new[]
+    {
+        Get(Type.Seed, input),
+        Get(Type.SeedToSoil, input),
+        Get(Type.SoilToFertilizer, input),
+        Get(Type.FertilizerToWater, input),
+        Get(Type.WaterToLight, input),
+        Get(Type.LightToTemperature, input),
+        Get(Type.TemperatureToHumidity, input),
+        Get(Type.HumidityToLocation, input)
+    }.AsSpan();
 
     private string[] Get(Type type, ReadOnlySpan<string> input)
     {
