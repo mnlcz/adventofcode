@@ -1,0 +1,29 @@
+{
+    "name": "mnlcz/aoc2023",
+    "description": "Advent of Code 2023 challenges",
+    "type": "project",
+    "require": {
+        "illuminate/collections": "^11.10",
+        "illuminate/filesystem": "^11.10",
+        "illuminate/support": "^11.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aoc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mnlcz",
+            "email": "manuel.lopez.cosmitz@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^2.34"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
