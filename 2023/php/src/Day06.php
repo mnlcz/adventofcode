@@ -30,7 +30,13 @@ class Day06
 
     public static function part2(bool $testing): int
     {
-        return PHP_INT_MIN;
+        [$time, $distance] = Str::of(input($testing ? '06Sample1.txt' : '06.txt'))->trim()->explode(PHP_EOL);
+        $time = intval(Str::of($time)->remove(' ')->after(':')->toString());
+        $distance = intval(Str::of($distance)->remove(' ')->after(':')->toString());
+
+        $ans = static::optimizedWaysToWin($time, $distance);
+
+        return $ans;
     }
 
     private static function waysToWin(int $t, int $d): Collection
@@ -56,8 +62,30 @@ class Day06
 
         return $ways;
     }
+
+    private static function optimizedWaysToWin(int $t, int $d): int
+    {
+        $ways = 0;
+        $time = $t - 1;
+        $won = false;
+
+        for ($speed = 1; $speed < $t; $speed++) {
+            $traveled = $time * $speed;
+            $time--;
+
+            if ($won && $traveled < $d) {
+                break;
+            }
+
+            if ($traveled > $d) {
+                $ways++;
+                $won = true;
+            }
+        }
+
+        return $ways;
+    }
 }
 
-// Day06::part1(true);
 echo 'Part 1: '.Day06::part1(false).PHP_EOL;
-// echo 'Part 2: '.Day06::part2(false).PHP_EOL;
+echo 'Part 2: '.Day06::part2(false).PHP_EOL;
