@@ -105,7 +105,7 @@ class $Name
 {
     public static function part1(bool `$testing): int
     {
-        `$in = Str::of(input(`$testing ? '5Sample1.txt' : '5.txt'))->trim()->explode(PHP_EOL);
+        `$in = Str::of(input(`$testing ? '${Name}Sample1.txt' : '$Name.txt'))->trim()->explode(PHP_EOL);
 
         return PHP_INT_MIN;
     }
