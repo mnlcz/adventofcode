@@ -10,3 +10,4 @@ My advent of code solutions.
 |  2   |   ✔   |   ✔   | [Here](csharp/Day2/Day2.cs)  |
 |  3   |   ✔   |   ✔   | [Here](csharp/Day3/Day3.cs)  |
 |  4   |   ✔   |   ✔   | [Here](csharp/Day4/Day4.cs)  |
+|  5   |   ✔   |   ✔   | [Here](php/src/Day05.php)    |
