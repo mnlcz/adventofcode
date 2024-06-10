@@ -20,7 +20,7 @@ class Day06
         $options = collect();
 
         foreach ($races as $time_lasting => $distance_record) {
-            $options->push(static::waysToWin($time_lasting, $distance_record)->count());
+            $options->push(static::waysToWin($time_lasting, $distance_record));
         }
 
         $ans = $options->reduce(fn ($carry, $i) => $carry * $i, 1);
@@ -34,14 +34,14 @@ class Day06
         $time = intval(Str::of($time)->remove(' ')->after(':')->toString());
         $distance = intval(Str::of($distance)->remove(' ')->after(':')->toString());
 
-        $ans = static::optimizedWaysToWin($time, $distance);
+        $ans = static::waysToWin($time, $distance);
 
         return $ans;
     }
 
-    private static function waysToWin(int $t, int $d): Collection
+    private static function waysToWin(int $t, int $d): int
     {
-        $ways = collect();
+        $ways = 0;
         $time = $t - 1; // Time could never be its original value, because we need at least 1ms to charge the boat's speed
         $won = false;
 
@@ -50,29 +50,6 @@ class Day06
             $time--;
 
             // If we already won a race and we lose now it means we wasted too much time on charging the speed
-            if ($won && $traveled < $d) {
-                break;
-            }
-
-            if ($traveled > $d) {
-                $ways->push($traveled); // We only care about the times we win
-                $won = true;
-            }
-        }
-
-        return $ways;
-    }
-
-    private static function optimizedWaysToWin(int $t, int $d): int
-    {
-        $ways = 0;
-        $time = $t - 1;
-        $won = false;
-
-        for ($speed = 1; $speed < $t; $speed++) {
-            $traveled = $time * $speed;
-            $time--;
-
             if ($won && $traveled < $d) {
                 break;
             }
