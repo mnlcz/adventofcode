@@ -107,12 +107,12 @@ class $Name
     {
         `$in = Str::of(input(`$testing ? '${Name}Sample1.txt' : '$Name.txt'))->trim()->explode(PHP_EOL);
 
-        return PHP_INT_MIN;
+        return PHP_INT_MAX;
     }
 
     public static function part2(bool `$testing): int
     {
-        return PHP_INT_MIN;
+        return PHP_INT_MAX;
     }
 }
 
