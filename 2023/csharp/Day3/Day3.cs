@@ -73,13 +73,13 @@ public sealed class Solution3 : ISolution
         List<int> valids = [];
 
         foreach (var pc in parts)
-        foreach (var nc in nums)
-        {
-            var num = nc.Item1;
+            foreach (var nc in nums)
+            {
+                var num = nc.Item1;
 
-            if (IsClose(pc, nc))
-                valids.Add(int.Parse(num));
-        }
+                if (IsClose(pc, nc))
+                    valids.Add(int.Parse(num));
+            }
 
         return [.. valids];
     }
@@ -165,9 +165,9 @@ public sealed class Solution3 : ISolution
         var surroundings = GetSurroundings(coord);
 
         foreach (var surr in surroundings)
-        foreach (var dc in digitCoords)
-            if (surr == dc)
-                result = true;
+            foreach (var dc in digitCoords)
+                if (surr == dc)
+                    result = true;
 
         return result;
     }

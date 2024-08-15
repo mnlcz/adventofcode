@@ -82,8 +82,8 @@ public class Parser(string year)
         var h = input.Length;
 
         for (var i = 0; i < h; i++)
-        for (var j = 0; j < l; j++)
-            grid[new Point(j, i)] = input[i][j];
+            for (var j = 0; j < l; j++)
+                grid[new Point(j, i)] = input[i][j];
 
         return grid;
     }

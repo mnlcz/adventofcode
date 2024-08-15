@@ -39,8 +39,8 @@ public sealed class Solution4 : ISolution
             var times = copies[i];
             var extra = extras[i];
             for (var j = 0; j < times; j++)
-            for (var k = 0; k < extra; k++)
-                copies[i + k + 1]++;
+                for (var k = 0; k < extra; k++)
+                    copies[i + k + 1]++;
         }
 
         return [.. copies];
@@ -84,9 +84,9 @@ public sealed class Solution4 : ISolution
         var candidates = card[1].Split(" ").Where(i => i != "").ToArray();
 
         foreach (var c in candidates)
-        foreach (var w in winners)
-            if (c == w)
-                winningNumbers.Add(int.Parse(c));
+            foreach (var w in winners)
+                if (c == w)
+                    winningNumbers.Add(int.Parse(c));
 
         return [.. winningNumbers];
     }
