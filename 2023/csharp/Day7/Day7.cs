@@ -109,9 +109,9 @@ public sealed class Solution7 : ISolution
 
     public string ReinterpretHand(string og)
     {
-        if (!og.Contains('J')) 
+        if (!og.Contains('J'))
             return og;
-        
+
         var reps = og.GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
         var jokers = reps['J'];
         var replaceJoker = (int n) => og.Replace('J', reps.First(x => x.Value == n && x.Key != 'J').Key);
