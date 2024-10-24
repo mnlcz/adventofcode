@@ -484,3 +484,5 @@ GlobalUsings.cs
 Testing*/
 *Sample*.txt
 inputs/
+zig-out/
+.zig-cache/
