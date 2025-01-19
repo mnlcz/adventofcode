@@ -486,3 +486,4 @@ Testing*/
 inputs/
 zig-out/
 .zig-cache/
+.idea/
