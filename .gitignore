@@ -478,7 +478,7 @@ $RECYCLE.BIN/
 
 # Personal
 .editorconfig
-Program.cs
+!*/Runner/Program.cs
 *Test.cs
 GlobalUsings.cs
 Testing*/
