@@ -489,4 +489,4 @@ zig-out/
 .idea/
 session.txt
 composer.phar
-/vendor/
+vendor/
