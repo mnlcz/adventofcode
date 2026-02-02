@@ -1,0 +1,18 @@
+{
+  "name": "mnlcz/aoc25",
+  "description": "Advent of Code 2025",
+  "require": {
+    "illuminate/collections": "^12.49"
+  },
+  "autoload": {
+    "psr-4": {
+      "AdventOfCode\\Year2025\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "MnLCz",
+      "email": "mnlcz@tuta.io"
+    }
+  ]
+}
