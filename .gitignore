@@ -487,3 +487,6 @@ inputs/
 zig-out/
 .zig-cache/
 .idea/
+session.txt
+composer.phar
+/vendor/
