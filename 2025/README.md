@@ -6,5 +6,4 @@ My advent of code solutions.
 
 | Day | Part 1 | Part 2 | Solution |
 | --- | ------ | ------ | -------- |
-| 1   | -      | -      | -        |
-
+| 1   | ✅     | ✅     | [01.scm](src/01.scm) |
