@@ -39,7 +39,7 @@
                   (cons ns invalids))
             (loop (+ 1 ns) invalids)))))
 
-(define (part1 in)
+(define (main-logic in proc-invalidator)
   (let loop
     ((rs (ranges in))
      (invalids '()))
@@ -50,4 +50,7 @@
                (start (string->number (car curr)))
                (finish (string->number (cadr curr))))
           (loop (cdr rs)
-                (cons (invalid-ids start finish) invalids))))))
+                (cons (proc-invalidator start finish) invalids))))))
+
+(define (part1 in)
+  (main-logic in invalid-ids))
