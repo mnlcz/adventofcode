@@ -9,18 +9,6 @@
   (call-with-input-file "./2025/inputs/01.txt"
     read-string))
 
-(define dial
-  50)
-(define range-len
-  100)
-
-(define (lines in)
-  (remove string-null? (string-split in #\newline)))
-
-(define (wrap-and-count delta)
-  (cons (floor (/ delta range-len))
-        (modulo delta range-len)))
-
 (define (rotation->mov rotation)
   (let* ((ch (string->list rotation))
          (dir (car ch))
@@ -28,31 +16,59 @@
     (if (char=? dir #\L)
         (* -1 step) step)))
 
+(define (step-dial pos mov count-wraps?)
+  (let* ((step (abs mov))
+         (dir (if (< mov 0)
+                  'L
+                  'R))
+         (new-pos (modulo (+ pos mov) 100)))
+    (if count-wraps?
+        (let ((crossings (if (eq? dir
+                                  'R)
+                             (quotient (+ pos step) 100)
+                             (if (= pos 0)
+                                 (quotient step 100)
+                                 (quotient (+ step
+                                              (- 100 pos)) 100)))))
+          (cons new-pos crossings))
+        (let ((landed-zero? (if (= new-pos 0) 1 0)))
+          (cons new-pos landed-zero?)))))
+
 (define* (cycle rotations count-wraps?
                 #:optional (log #f))
-  (let* ((counter 0))
-    (for-each (lambda (r)
-                (let* ((mov (rotation->mov r))
-                       (delta (+ dial mov))
-                       (wrap (wrap-and-count delta))
-                       (wrap-value (cdr wrap))
-                       (wrap-times (abs (car wrap))))
-                  (when log
-                    (format #t
-                     "[DEBUG] dial: ~s; rotation: ~s; wrap-val: ~s; wrap-times: ~s~%"
-                     dial
-                     r
-                     wrap-value
-                     wrap-times))
-                  (set! dial wrap-value)
-                  (when (eq? wrap-value 0)
-                    (set! counter
-                          (+ 1 counter)))
-                  #;(when count-wraps?
-                    (display "Todo")))) rotations) counter))
+  (let loop
+    ((rest rotations)
+     (dial 50)
+     (counter 0))
+    (if (null? rest) counter
+        (let* ((r (car rest))
+               (mov (rotation->mov r))
+               (res (step-dial dial mov count-wraps?))
+               (next-dial (car res))
+               (added-count (cdr res)))
+          (when log
+            (format #t
+                    "[LOG] dial: ~a; rotation: ~s; next: ~a; added: +~a~%"
+                    dial
+                    r
+                    next-dial
+                    added-count))
+          (loop (cdr rest) next-dial
+                (+ counter added-count))))))
 
-(define (part1 use-sample?)
-  (let ((rotations (if use-sample?
-                       (lines sample)
-                       (lines input))))
-    (cycle rotations #f)))
+(define (lines in)
+  (remove string-null?
+          (string-split in #\newline)))
+
+(define (part1 in)
+  (cycle (lines in) #f))
+
+(define (part2 in)
+  (cycle (lines in) #t))
+
+(define (main)
+  (format #t "Part 1: ~a~%Part 2: ~a~%"
+          (part1 input)
+          (part2 input)))
+
+(main)
